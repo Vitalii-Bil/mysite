@@ -1,0 +1,12 @@
+{% if gip %}
+<h1> Hypotenuse value = {{ gip }} </h1>
+{% else %}
+<h1> Please enter the leg values </h1>
+<form method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+  <div class="form-actions">
+    <button type="submit">Calculate</button>
+  </div>
+</form>
+{% endif %}
