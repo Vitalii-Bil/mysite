@@ -1,14 +1,15 @@
+from math import sqrt
+
+
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
 
-from .models import Choice, Question
 from .forms import TriangleForm
-
-from math import sqrt
+from .models import Choice, Question
 
 
 class IndexView(generic.ListView):
