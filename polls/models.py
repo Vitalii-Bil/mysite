@@ -26,3 +26,15 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    email = models.EmailField(max_length=254)
+
+    def get_absolute_url(self):
+        return '/polls/person/%d' % self.id
+
+    def __str__(self):
+        return self.first_name

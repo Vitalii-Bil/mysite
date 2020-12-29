@@ -8,8 +8,8 @@ from django.utils import timezone
 from django.views import generic
 
 
-from .forms import TriangleForm
-from .models import Choice, Question
+from .forms import PersonForm, TriangleForm
+from .models import Choice, Person, Question
 
 
 class IndexView(generic.ListView):
@@ -80,3 +80,16 @@ def triangle_view(request):
             "form": form,
         }
     )
+
+
+class PersonCreate(generic.CreateView):
+    model = Person
+    form_class = PersonForm
+
+
+class PersonUpdate(generic.UpdateView):
+    model = Person
+    form_class = PersonForm
+
+    def get_object(self):
+        return get_object_or_404(Person, pk=self.kwargs['pk'])
