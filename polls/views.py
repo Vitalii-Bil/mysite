@@ -82,14 +82,56 @@ def triangle_view(request):
     )
 
 
-class PersonCreate(generic.CreateView):
-    model = Person
-    form_class = PersonForm
+def person_create(request):
+
+    if request.method == 'POST':
+
+        form = PersonForm(request.POST)
+
+        if form.is_valid():
+            person = Person()
+            person.first_name = form.cleaned_data['first_name']
+            person.last_name = form.cleaned_data['last_name']
+            person.email = form.cleaned_data['email']
+            person.save()
+
+            return HttpResponseRedirect(reverse('polls:person-update', args=(person.id,)))
+
+    else:
+        form = PersonForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'polls/person_form.html', context)
 
 
-class PersonUpdate(generic.UpdateView):
-    model = Person
-    form_class = PersonForm
+def person_update(request, pk):
+    person = get_object_or_404(Person, pk=pk)
 
-    def get_object(self):
-        return get_object_or_404(Person, pk=self.kwargs['pk'])
+    if request.method == 'POST':
+
+        form = PersonForm(request.POST)
+
+        if form.is_valid():
+            person.first_name = form.cleaned_data['first_name']
+            person.last_name = form.cleaned_data['last_name']
+            person.email = form.cleaned_data['email']
+            person.save()
+
+            return HttpResponseRedirect(reverse('polls:person-update', args=(person.id,)))
+
+    else:
+        form = PersonForm(initial={
+            'first_name': person.first_name,
+            'last_name': person.last_name,
+            'email': person.email
+        })
+
+    context = {
+        'form': form,
+        'person': person,
+    }
+
+    return render(request, 'polls/person_form.html', context)
