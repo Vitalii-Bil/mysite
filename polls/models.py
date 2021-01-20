@@ -35,3 +35,12 @@ class Person(models.Model):
 
     def __str__(self):
         return self.first_name
+
+
+class Log(models.Model):
+    path = models.CharField(max_length=2048)
+    method = models.CharField(max_length=20)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.path}, {self.method}, {self.timestamp}"

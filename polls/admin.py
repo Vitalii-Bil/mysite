@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Choice, Question
+from .models import Choice, Log, Question
 
 
 class ChoiceInline(admin.TabularInline):
@@ -8,6 +8,7 @@ class ChoiceInline(admin.TabularInline):
     extra = 3
 
 
+@admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['question_text']}),
@@ -19,4 +20,7 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['question_text']
 
 
-admin.site.register(Question, QuestionAdmin)
+@admin.register(Log)
+class LogAdmin(admin.ModelAdmin):
+    list_display = ["path", "method", "timestamp"]
+    fields = ['path', 'method']
