@@ -24,9 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '00tr22rawfwczzt2^776(i#0d1xul81q%j1^pb@e-!@%$k^342')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -45,6 +52,12 @@ INSTALLED_APPS = [
     'university.apps.UniversityConfig',
 ]
 
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+        'silk',
+    ]
+
 MIDDLEWARE = [
     'polls.custommiddleware.LogMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -55,6 +68,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        'silk.middleware.SilkyMiddleware',
+    ]
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -124,3 +143,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Silky
+SILKY_AUTHORISATION = True
+
+
+def my_custom_perms(user):
+    return user.is_superuser
+
+
+SILKY_PERMISSIONS = my_custom_perms
