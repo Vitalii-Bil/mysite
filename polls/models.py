@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class Question(models.Model):
@@ -44,3 +45,22 @@ class Log(models.Model):
 
     def __str__(self):
         return f"{self.path}, {self.method}, {self.timestamp}"
+
+
+class Author(models.Model):
+    first_name = models.CharField(_("first name"), max_length=100)
+    last_name = models.CharField(_("last name"), max_length=100)
+    date_of_birth = models.DateField(_("date of birth"), null=True, blank=True)
+    about = models.CharField(_("about"), max_length=5000)
+
+    def __str__(self):
+        return f"{self.last_name}, {self.first_name}"
+
+
+class Quote(models.Model):
+    quote = models.CharField(_("quote"), max_length=200)
+    tags = models.CharField(_("tags"), max_length=200)
+    author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.quote
