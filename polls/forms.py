@@ -1,7 +1,7 @@
 import datetime
 
 from django import forms
-from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 from .models import Person
 
@@ -23,11 +23,12 @@ class ReminderForm(forms.Form):
     text = forms.CharField(required=True, max_length=200)
     rem_date = forms.DateTimeField(required=True, initial=datetime.datetime.now)
 
-    def clean_date_and_time(self):
-        rem_date = self.cleaned_data['rem_date']
-        if rem_date < datetime.datetime.now():
-            raise forms.ValidationError(_('The date must be no earlier than the current date'))
-        if rem_date > datetime.datetime.now() + datetime.timedelta(days=2):
-            raise forms.ValidationError(_('The date must be no later than 2 days'))
+    def clean_rem_date(self):
+        data = self.cleaned_data['rem_date']
+        if data < timezone.now():
+            raise forms.ValidationError("The date must be no earlier than the current date")
 
-        return rem_date
+        if data > timezone.now() + datetime.timedelta(days=2):
+            raise forms.ValidationError('The date must be no later than 2 days')
+
+        return data
