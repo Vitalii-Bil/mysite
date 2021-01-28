@@ -11,4 +11,5 @@ urlpatterns = [
     path('triangle/', views.triangle_view, name='triangle'),
     path('person/', views.person_create, name='person-create'),
     path('person/<int:pk>/', views.person_update, name='person-update'),
+    path('reminder/', views.reminder_view, name='reminder'),
 ]

@@ -1,0 +1,9 @@
+
+<h1> Please enter reminder </h1>
+<form method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+  <div class="form-actions">
+    <button type="submit">Set a reminder</button>
+  </div>
+</form>

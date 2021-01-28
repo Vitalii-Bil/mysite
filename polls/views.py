@@ -1,15 +1,17 @@
 from math import sqrt
 
 
+from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
 
-from .forms import PersonForm, TriangleForm
+from .forms import PersonForm, ReminderForm, TriangleForm
 from .models import Choice, Person, Question
+from .tasks import send_mail as celery_send_mail
 
 
 class IndexView(generic.ListView):
@@ -135,3 +137,19 @@ def person_update(request, pk):
     }
 
     return render(request, 'polls/person_form.html', context)
+
+
+def reminder_view(request):
+    if request.method == "GET":
+        form = ReminderForm()
+    else:
+        form = ReminderForm(request.POST)
+        if form.is_valid():
+            subject = 'Напоминание'
+            from_email = form.cleaned_data['email']
+            text = form.cleaned_data['text']
+            send_date = form.cleaned_data['rem_date']
+            celery_send_mail.apply_async((subject, text, from_email), eta=send_date)
+            messages.add_message(request, messages.SUCCESS, 'Message sent')
+            return redirect('polls:reminder')
+    return render(request, "polls/reminder_page.html", context={"form": form, })

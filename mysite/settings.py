@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '00tr22rawfwczzt2^776(i#0d1xul81q%j1^pb@e-!@%$k^342')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
+    'django_celery_results',
 
     'polls.apps.PollsConfig',
     'university.apps.UniversityConfig',
@@ -154,3 +155,10 @@ def my_custom_perms(user):
 
 
 SILKY_PERMISSIONS = my_custom_perms
+
+
+# Celery
+
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = 'django-db'
