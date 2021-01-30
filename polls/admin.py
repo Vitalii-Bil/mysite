@@ -34,4 +34,4 @@ class LogAdmin(admin.ModelAdmin):
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
     inlines = [QuoteInLine]
-    list_display = ['first_name', 'last_name', 'date_of_birth', 'about']
+    list_display = ['name', 'date_of_birth', 'born_location', 'about']

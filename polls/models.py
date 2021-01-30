@@ -48,13 +48,13 @@ class Log(models.Model):
 
 
 class Author(models.Model):
-    first_name = models.CharField(_("first name"), max_length=100)
-    last_name = models.CharField(_("last name"), max_length=100)
-    date_of_birth = models.DateField(_("date of birth"), null=True, blank=True)
+    name = models.CharField(_("name"), max_length=100)
+    date_of_birth = models.CharField(_("date of birth"), max_length=200)
+    born_location = models.CharField(_("born location"), max_length=200)
     about = models.CharField(_("about"), max_length=5000)
 
     def __str__(self):
-        return f"{self.last_name}, {self.first_name}"
+        return self.name
 
 
 class Quote(models.Model):

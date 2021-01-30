@@ -19,21 +19,11 @@ app.autodiscover_tasks()
 
 
 app.conf.beat_schedule = {
-    # executes every 1 minute
-    # 'scraping-task-one-min': {
-    #    'task': 'scraping.tasks.hackernews_rss',
-    #    'schedule': crontab(),
-    # },
-    # # executes every 15 minutes
-    # 'scraping-task-fifteen-min': {
-    #     'task': 'tasks.hackernews_rss',
-    #     'schedule': crontab(minute='*/15')
-    # },
-    # # executes daily at midnight
-    # 'scraping-task-midnight-daily': {
-    #     'task': 'tasks.hackernews_rss',
-    #     'schedule': crontab(minute=0, hour=0)
-    # }
+    'scraping-task-odd_hour': {
+        'task': 'polls.tasks.add_quote',
+        'schedule': crontab(hour='1-23/2')
+
+    }
 }
 
 
