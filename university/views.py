@@ -2,17 +2,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
-from .models import Student
+from .models import Student, University
 
 
 class StudentList(ListView):
     model = Student
     paginate_by = 10
     template_name = 'university/student_list_page.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class StudentDetail(DetailView):
@@ -45,3 +41,10 @@ class StudentDelete(LoginRequiredMixin, DeleteView):
     model = Student
     success_url = reverse_lazy('university:student_list')
     template_name = 'university/student_delete_page.html'
+
+
+class UniversityList(ListView):
+    model = University
+    paginate_by = 250
+    template_name = 'university/university_list_page.html'
+    queryset = University.objects.all().prefetch_related('student_set').all()

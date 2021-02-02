@@ -1,0 +1,34 @@
+<h1>Universities:</h1>
+<ul>
+
+{% for university in page_obj %}
+    <li><h3>University: {{ university.name }} </h3></li>
+        {% for student in university.student_set.all %}
+            <ol>Student: <a href="student/{{ student.id }}">{{ student.first_name }} {{ student.last_name }}</a></ol>
+        {% empty %}
+            <li>No students yet.</li>
+        {% endfor %}
+{% empty %}
+    <li>No universities yet.</li>
+{% endfor %}
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+</ul>
