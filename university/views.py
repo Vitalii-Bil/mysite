@@ -9,6 +9,7 @@ class StudentList(ListView):
     model = Student
     paginate_by = 10
     template_name = 'university/student_list_page.html'
+    ordering = ['first_name', 'last_name']
 
 
 class StudentDetail(DetailView):
@@ -45,6 +46,7 @@ class StudentDelete(LoginRequiredMixin, DeleteView):
 
 class UniversityList(ListView):
     model = University
-    paginate_by = 250
+    paginate_by = 10
     template_name = 'university/university_list_page.html'
     queryset = University.objects.all().prefetch_related('student_set').all()
+    ordering = ['name']

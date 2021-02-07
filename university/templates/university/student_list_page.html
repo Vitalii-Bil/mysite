@@ -1,7 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <h1>Students:</h1>
 <ul>
 {% for student in page_obj %}
-    <li><a href="student/{{ student.id }}">Student: {{ student.first_name }} {{ student.last_name }}</a></li>
+    <li> Student: <a href="student/{{ student.id }}"> {{ student.first_name }} {{ student.last_name }}</a></li>
 {% empty %}
     <li>No students yet.</li>
 {% endfor %}
@@ -27,3 +31,7 @@
 </div>
 
 </ul>
+
+{% include "university/info.html" %}
+
+{% endblock %}

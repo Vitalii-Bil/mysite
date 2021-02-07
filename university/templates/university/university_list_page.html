@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <h1>Universities:</h1>
 <ul>
 
@@ -12,6 +16,7 @@
     <li>No universities yet.</li>
 {% endfor %}
 
+</ul>
 
 <div class="pagination">
     <span class="step-links">
@@ -31,4 +36,6 @@
     </span>
 </div>
 
-</ul>
+{% include "university/info.html" %}
+
+{% endblock %}
