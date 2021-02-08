@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from .models import Student, University
 
 
+@method_decorator(cache_page(10), name='dispatch')
 class StudentList(ListView):
     model = Student
     paginate_by = 10
@@ -12,6 +15,7 @@ class StudentList(ListView):
     ordering = ['first_name', 'last_name']
 
 
+@method_decorator(cache_page(10), name='dispatch')
 class StudentDetail(DetailView):
     model = Student
     template_name = 'university/student_detail_page.html'
@@ -44,6 +48,7 @@ class StudentDelete(LoginRequiredMixin, DeleteView):
     template_name = 'university/student_delete_page.html'
 
 
+@method_decorator(cache_page(10), name='dispatch')
 class UniversityList(ListView):
     model = University
     paginate_by = 10

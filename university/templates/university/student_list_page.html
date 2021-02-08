@@ -4,8 +4,9 @@
 
 <h1>Students:</h1>
 <ul>
+{% load custom_tags %}
 {% for student in page_obj %}
-    <li> Student: <a href="student/{{ student.id }}"> {{ student.first_name }} {{ student.last_name }}</a></li>
+    <li> Student: <a href="student/{{ student.id }}"> {{ student.first_name|modify_string }} {{ student.last_name|modify_string }}</a></li>
 {% empty %}
     <li>No students yet.</li>
 {% endfor %}

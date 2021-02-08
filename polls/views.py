@@ -6,7 +6,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.views import generic
+from django.views.decorators.cache import cache_page
 
 
 from .forms import PersonForm, ReminderForm, TriangleForm
@@ -24,6 +26,7 @@ class IndexView(generic.ListView):
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 
+@method_decorator(cache_page(10), name='dispatch')
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'

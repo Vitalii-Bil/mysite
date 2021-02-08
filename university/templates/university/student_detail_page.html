@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<h1>Student: {{ student.first_name }} {{ student.last_name }}</h1></li>
+{% load custom_tags %}
+<h1>Student: {{ student.first_name|modify_string }} {{ student.last_name|modify_string }}</h1></li>
 <h3>Date of birth: {{ student.date_of_birth|date }}</h3>
-<h3>University: {{ student.university }}</h3>
-<h3>Lecturer: {{ student.lecturer }}</h3>
+<h3>University: {{ student.university|modify_string }}</h3>
+<h3>Lecturer: {{ student.lecturer|modify_string }}</h3>
 <a href="../../student/update/{{ student.id }}">Update</a>
 <a href='../../student/delete/{{ student.id }}'>Delete</a>
 
