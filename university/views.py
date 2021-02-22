@@ -1,15 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from django.http import HttpResponseRedirect, JsonResponse
 
-from .models import Student, University
 from .forms import FeedbackFrom
+from .models import Student, University
 
 
 @method_decorator(cache_page(10), name='dispatch')
