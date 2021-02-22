@@ -51,6 +51,8 @@ INSTALLED_APPS = [
 
     'polls.apps.PollsConfig',
     'university.apps.UniversityConfig',
+
+    'widget_tweaks',
 ]
 
 if DEBUG:

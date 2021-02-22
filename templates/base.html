@@ -5,8 +5,46 @@
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
+crossorigin="anonymous"></script>
+
+{% block extra_js %}
+  <script src="{% static 'js/books.js' %}"></script>
+  <script src="{% static 'js/contact_us.js' %}"></script>
+{% endblock %}
+
+
 </head>
 <body>
+
+<div class="container-fluid">
+    {% if messages %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}
+                            {{ message.tags|title }}{% endif %}!</strong> {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+
 
 <div class="topnav">
   <a class="active" href="{% url 'university:student_list' %}">Student list</a>
@@ -14,6 +52,19 @@
   {% if user.is_authenticated %}
   <a href="{% url 'university:student_create' %}">Add student</a>
   {% endif %}
+
+
+<ul class="sidebar-nav">
+                    <li>
+                        <button type="button" class="btn btn-primary js-contact-ajax"
+                                data-url="{% url 'university:contact-ajax' %}">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Contact Us Ajax
+                        </button>
+                    </li>
+                </ul>
+
+
 </div>
 
 <div style="padding-left:16px">
@@ -23,6 +74,20 @@
   <h3> {% random_quote %} </h3>
   {% block content %}
   {% endblock %}
+
+
+  {% block modal %}
+    <div class="modal fade" id="modal-book">
+    <div class="modal fade" id="contact-ajax">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+
+
 </div>
 
 </body>

@@ -10,4 +10,5 @@ urlpatterns = [
     path('student/update/<int:pk>', views.StudentUpdate.as_view(), name='student_update'),
     path('student/delete/<int:pk>', views.StudentDelete.as_view(), name='student_delete'),
     path('', views.UniversityList.as_view(), name='university_list'),
+    path('contact_ajax/', views.contact_form, name='contact-ajax'),
 ]
